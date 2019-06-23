@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CodeMotorsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Automobil">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ManufactureDate" Type="DateTime" Precision="0" />
+    <Property Name="MotorTypeId" Type="Int32" Nullable="false" />
+    <Property Name="Motor" Type="Decimal" Precision="18" Scale="1" />
+    <Property Name="TransmissionId" Type="Int32" />
+    <Property Name="Color" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Millage_km_" Type="Int32" />
+    <Property Name="ModelId" Type="Int32" />
+    <NavigationProperty Name="MotorType" Relationship="Self.FK__Automobil__Motor__45F365D3" FromRole="Automobils" ToRole="MotorTypes" />
+    <NavigationProperty Name="Transmission" Relationship="Self.FK__Automobil__Trans__46E78A0C" FromRole="Automobils" ToRole="Transmissions" />
+    <NavigationProperty Name="Model" Relationship="Self.FK_Automobils_Models" FromRole="Automobils" ToRole="Models" />
+  </EntityType>
+  <EntityType Name="Brand">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Models" Relationship="Self.FK__Models__BrandId__3C69FB99" FromRole="Brands" ToRole="Models" />
+  </EntityType>
+  <EntityType Name="Model">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="BrandId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Automobils" Relationship="Self.FK_Automobils_Models" FromRole="Models" ToRole="Automobils" />
+    <NavigationProperty Name="Brand" Relationship="Self.FK__Models__BrandId__3C69FB99" FromRole="Models" ToRole="Brands" />
+  </EntityType>
+  <EntityType Name="MotorType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MotorType1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Automobils" Relationship="Self.FK__Automobil__Motor__45F365D3" FromRole="MotorTypes" ToRole="Automobils" />
+  </EntityType>
+  <EntityType Name="Transmission">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Transmission1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Automobils" Relationship="Self.FK__Automobil__Trans__46E78A0C" FromRole="Transmissions" ToRole="Automobils" />
+  </EntityType>
+  <EntityType Name="All_autos">
+    <Key>
+      <PropertyRef Name="Name" />
+      <PropertyRef Name="Brand" />
+      <PropertyRef Name="Model_name" />
+      <PropertyRef Name="MotorType" />
+      <PropertyRef Name="Transmission" />
+    </Key>
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Brand" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Model_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ManufactureDate" Type="DateTime" Precision="0" />
+    <Property Name="MotorType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Motor" Type="Decimal" Precision="18" Scale="1" />
+    <Property Name="Transmission" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Color" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Millage_km_" Type="Int32" />
+  </EntityType>
+  <Association Name="FK__Automobil__Motor__45F365D3">
+    <End Role="MotorTypes" Type="Self.MotorType" Multiplicity="1" />
+    <End Role="Automobils" Type="Self.Automobil" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MotorTypes">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Automobils">
+        <PropertyRef Name="MotorTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Automobil__Trans__46E78A0C">
+    <End Role="Transmissions" Type="Self.Transmission" Multiplicity="0..1" />
+    <End Role="Automobils" Type="Self.Automobil" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Transmissions">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Automobils">
+        <PropertyRef Name="TransmissionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Automobils_Models">
+    <End Role="Models" Type="Self.Model" Multiplicity="0..1" />
+    <End Role="Automobils" Type="Self.Automobil" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Models">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Automobils">
+        <PropertyRef Name="ModelId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Models__BrandId__3C69FB99">
+    <End Role="Brands" Type="Self.Brand" Multiplicity="1" />
+    <End Role="Models" Type="Self.Model" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Brands">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Models">
+        <PropertyRef Name="BrandId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="CodeMotorsEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Automobils" EntityType="Self.Automobil" />
+    <EntitySet Name="Brands" EntityType="Self.Brand" />
+    <EntitySet Name="Models" EntityType="Self.Model" />
+    <EntitySet Name="MotorTypes" EntityType="Self.MotorType" />
+    <EntitySet Name="Transmissions" EntityType="Self.Transmission" />
+    <EntitySet Name="All_autos" EntityType="Self.All_autos" />
+    <AssociationSet Name="FK__Automobil__Motor__45F365D3" Association="Self.FK__Automobil__Motor__45F365D3">
+      <End Role="MotorTypes" EntitySet="MotorTypes" />
+      <End Role="Automobils" EntitySet="Automobils" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Automobil__Trans__46E78A0C" Association="Self.FK__Automobil__Trans__46E78A0C">
+      <End Role="Transmissions" EntitySet="Transmissions" />
+      <End Role="Automobils" EntitySet="Automobils" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Automobils_Models" Association="Self.FK_Automobils_Models">
+      <End Role="Models" EntitySet="Models" />
+      <End Role="Automobils" EntitySet="Automobils" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Models__BrandId__3C69FB99" Association="Self.FK__Models__BrandId__3C69FB99">
+      <End Role="Brands" EntitySet="Brands" />
+      <End Role="Models" EntitySet="Models" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

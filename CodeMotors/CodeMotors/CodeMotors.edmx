@@ -1,0 +1,393 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CodeMotorsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Automobils">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ManufactureDate" Type="date" />
+          <Property Name="MotorTypeId" Type="int" Nullable="false" />
+          <Property Name="Motor" Type="decimal" Precision="18" Scale="1" />
+          <Property Name="TransmissionId" Type="int" />
+          <Property Name="Color" Type="nvarchar" MaxLength="50" />
+          <Property Name="Millage(km)" Type="int" />
+          <Property Name="ModelId" Type="int" />
+        </EntityType>
+        <EntityType Name="Brands">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Models">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="BrandId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MotorTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MotorType" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Transmissions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Transmission" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'CodeMotors.dbo.All_autos' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="All_autos">
+          <Key>
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="Brand" />
+            <PropertyRef Name="Model name" />
+            <PropertyRef Name="MotorType" />
+            <PropertyRef Name="Transmission" />
+          </Key>
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Brand" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Model name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ManufactureDate" Type="date" />
+          <Property Name="MotorType" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Motor" Type="decimal" Precision="18" Scale="1" />
+          <Property Name="Transmission" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Color" Type="nvarchar" MaxLength="50" />
+          <Property Name="Millage(km)" Type="int" />
+        </EntityType>
+        <Association Name="FK__Automobil__Motor__45F365D3">
+          <End Role="MotorTypes" Type="Self.MotorTypes" Multiplicity="1" />
+          <End Role="Automobils" Type="Self.Automobils" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MotorTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Automobils">
+              <PropertyRef Name="MotorTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Automobil__Trans__46E78A0C">
+          <End Role="Transmissions" Type="Self.Transmissions" Multiplicity="0..1" />
+          <End Role="Automobils" Type="Self.Automobils" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transmissions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Automobils">
+              <PropertyRef Name="TransmissionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Models__BrandId__3C69FB99">
+          <End Role="Brands" Type="Self.Brands" Multiplicity="1" />
+          <End Role="Models" Type="Self.Models" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Brands">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Models">
+              <PropertyRef Name="BrandId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Automobils_Models">
+          <End Role="Models" Type="Self.Models" Multiplicity="0..1" />
+          <End Role="Automobils" Type="Self.Automobils" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Models">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Automobils">
+              <PropertyRef Name="ModelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CodeMotorsModelStoreContainer">
+          <EntitySet Name="Automobils" EntityType="Self.Automobils" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Brands" EntityType="Self.Brands" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Models" EntityType="Self.Models" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MotorTypes" EntityType="Self.MotorTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Transmissions" EntityType="Self.Transmissions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="All_autos" EntityType="Self.All_autos" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [All_autos].[Name] AS [Name], 
+    [All_autos].[Brand] AS [Brand], 
+    [All_autos].[Model name] AS [Model name], 
+    [All_autos].[ManufactureDate] AS [ManufactureDate], 
+    [All_autos].[MotorType] AS [MotorType], 
+    [All_autos].[Motor] AS [Motor], 
+    [All_autos].[Transmission] AS [Transmission], 
+    [All_autos].[Color] AS [Color], 
+    [All_autos].[Millage(km)] AS [Millage(km)]
+    FROM [dbo].[All_autos] AS [All_autos]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__Automobil__Motor__45F365D3" Association="Self.FK__Automobil__Motor__45F365D3">
+            <End Role="MotorTypes" EntitySet="MotorTypes" />
+            <End Role="Automobils" EntitySet="Automobils" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Automobil__Trans__46E78A0C" Association="Self.FK__Automobil__Trans__46E78A0C">
+            <End Role="Transmissions" EntitySet="Transmissions" />
+            <End Role="Automobils" EntitySet="Automobils" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Models__BrandId__3C69FB99" Association="Self.FK__Models__BrandId__3C69FB99">
+            <End Role="Brands" EntitySet="Brands" />
+            <End Role="Models" EntitySet="Models" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Automobils_Models" Association="Self.FK_Automobils_Models">
+            <End Role="Models" EntitySet="Models" />
+            <End Role="Automobils" EntitySet="Automobils" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CodeMotorsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Automobil">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ManufactureDate" Type="DateTime" Precision="0" />
+          <Property Name="MotorTypeId" Type="Int32" Nullable="false" />
+          <Property Name="Motor" Type="Decimal" Precision="18" Scale="1" />
+          <Property Name="TransmissionId" Type="Int32" />
+          <Property Name="Color" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Millage_km_" Type="Int32" />
+          <Property Name="ModelId" Type="Int32" />
+          <NavigationProperty Name="MotorType" Relationship="Self.FK__Automobil__Motor__45F365D3" FromRole="Automobils" ToRole="MotorTypes" />
+          <NavigationProperty Name="Transmission" Relationship="Self.FK__Automobil__Trans__46E78A0C" FromRole="Automobils" ToRole="Transmissions" />
+          <NavigationProperty Name="Model" Relationship="Self.FK_Automobils_Models" FromRole="Automobils" ToRole="Models" />
+        </EntityType>
+        <EntityType Name="Brand">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Models" Relationship="Self.FK__Models__BrandId__3C69FB99" FromRole="Brands" ToRole="Models" />
+        </EntityType>
+        <EntityType Name="Model">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BrandId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Automobils" Relationship="Self.FK_Automobils_Models" FromRole="Models" ToRole="Automobils" />
+          <NavigationProperty Name="Brand" Relationship="Self.FK__Models__BrandId__3C69FB99" FromRole="Models" ToRole="Brands" />
+        </EntityType>
+        <EntityType Name="MotorType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MotorType1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Automobils" Relationship="Self.FK__Automobil__Motor__45F365D3" FromRole="MotorTypes" ToRole="Automobils" />
+        </EntityType>
+        <EntityType Name="Transmission">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Transmission1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Automobils" Relationship="Self.FK__Automobil__Trans__46E78A0C" FromRole="Transmissions" ToRole="Automobils" />
+        </EntityType>
+        <EntityType Name="All_autos">
+          <Key>
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="Brand" />
+            <PropertyRef Name="Model_name" />
+            <PropertyRef Name="MotorType" />
+            <PropertyRef Name="Transmission" />
+          </Key>
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Brand" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Model_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ManufactureDate" Type="DateTime" Precision="0" />
+          <Property Name="MotorType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Motor" Type="Decimal" Precision="18" Scale="1" />
+          <Property Name="Transmission" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Color" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Millage_km_" Type="Int32" />
+        </EntityType>
+        <Association Name="FK__Automobil__Motor__45F365D3">
+          <End Role="MotorTypes" Type="Self.MotorType" Multiplicity="1" />
+          <End Role="Automobils" Type="Self.Automobil" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MotorTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Automobils">
+              <PropertyRef Name="MotorTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Automobil__Trans__46E78A0C">
+          <End Role="Transmissions" Type="Self.Transmission" Multiplicity="0..1" />
+          <End Role="Automobils" Type="Self.Automobil" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transmissions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Automobils">
+              <PropertyRef Name="TransmissionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Automobils_Models">
+          <End Role="Models" Type="Self.Model" Multiplicity="0..1" />
+          <End Role="Automobils" Type="Self.Automobil" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Models">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Automobils">
+              <PropertyRef Name="ModelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Models__BrandId__3C69FB99">
+          <End Role="Brands" Type="Self.Brand" Multiplicity="1" />
+          <End Role="Models" Type="Self.Model" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Brands">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Models">
+              <PropertyRef Name="BrandId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CodeMotorsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Automobils" EntityType="Self.Automobil" />
+          <EntitySet Name="Brands" EntityType="Self.Brand" />
+          <EntitySet Name="Models" EntityType="Self.Model" />
+          <EntitySet Name="MotorTypes" EntityType="Self.MotorType" />
+          <EntitySet Name="Transmissions" EntityType="Self.Transmission" />
+          <EntitySet Name="All_autos" EntityType="Self.All_autos" />
+          <AssociationSet Name="FK__Automobil__Motor__45F365D3" Association="Self.FK__Automobil__Motor__45F365D3">
+            <End Role="MotorTypes" EntitySet="MotorTypes" />
+            <End Role="Automobils" EntitySet="Automobils" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Automobil__Trans__46E78A0C" Association="Self.FK__Automobil__Trans__46E78A0C">
+            <End Role="Transmissions" EntitySet="Transmissions" />
+            <End Role="Automobils" EntitySet="Automobils" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Automobils_Models" Association="Self.FK_Automobils_Models">
+            <End Role="Models" EntitySet="Models" />
+            <End Role="Automobils" EntitySet="Automobils" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Models__BrandId__3C69FB99" Association="Self.FK__Models__BrandId__3C69FB99">
+            <End Role="Brands" EntitySet="Brands" />
+            <End Role="Models" EntitySet="Models" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CodeMotorsModelStoreContainer" CdmEntityContainer="CodeMotorsEntities">
+          <EntitySetMapping Name="Automobils">
+            <EntityTypeMapping TypeName="CodeMotorsModel.Automobil">
+              <MappingFragment StoreEntitySet="Automobils">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ManufactureDate" ColumnName="ManufactureDate" />
+                <ScalarProperty Name="MotorTypeId" ColumnName="MotorTypeId" />
+                <ScalarProperty Name="Motor" ColumnName="Motor" />
+                <ScalarProperty Name="TransmissionId" ColumnName="TransmissionId" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="Millage_km_" ColumnName="Millage(km)" />
+                <ScalarProperty Name="ModelId" ColumnName="ModelId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Brands">
+            <EntityTypeMapping TypeName="CodeMotorsModel.Brand">
+              <MappingFragment StoreEntitySet="Brands">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Models">
+            <EntityTypeMapping TypeName="CodeMotorsModel.Model">
+              <MappingFragment StoreEntitySet="Models">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="BrandId" ColumnName="BrandId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MotorTypes">
+            <EntityTypeMapping TypeName="CodeMotorsModel.MotorType">
+              <MappingFragment StoreEntitySet="MotorTypes">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="MotorType1" ColumnName="MotorType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Transmissions">
+            <EntityTypeMapping TypeName="CodeMotorsModel.Transmission">
+              <MappingFragment StoreEntitySet="Transmissions">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Transmission1" ColumnName="Transmission" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="All_autos">
+            <EntityTypeMapping TypeName="CodeMotorsModel.All_autos">
+              <MappingFragment StoreEntitySet="All_autos">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Brand" ColumnName="Brand" />
+                <ScalarProperty Name="Model_name" ColumnName="Model name" />
+                <ScalarProperty Name="ManufactureDate" ColumnName="ManufactureDate" />
+                <ScalarProperty Name="MotorType" ColumnName="MotorType" />
+                <ScalarProperty Name="Motor" ColumnName="Motor" />
+                <ScalarProperty Name="Transmission" ColumnName="Transmission" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="Millage_km_" ColumnName="Millage(km)" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
